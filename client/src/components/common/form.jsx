@@ -20,7 +20,7 @@ switch (control.componentType) {
         element = <textarea name={control.name} placeholder={control.placeholder}value={formData[control.name]} onChange={(e)=>setFormData({...formData,[control.name]:e.target.value})} />
 
         case type.SELECT:
-            element=<Select value={formData[control.name]} onChange={(e)=>setFormData({...formData,[control.name]:e.target.value})}>
+            element=<Select value={formData[control.name]} onValueChange={(value)=>setFormData({...formData,[control.name]:value})}>
                 <SelectTrigger className="w-full">
 <SelectValue placeholder={control.placeholder}/>
                 </SelectTrigger>
@@ -40,7 +40,6 @@ switch (control.componentType) {
 }
 return element;
     }
-    console.log(formControls.length)
   return (
    <form className='w-full ' onSubmit={onSubmit}>
 {

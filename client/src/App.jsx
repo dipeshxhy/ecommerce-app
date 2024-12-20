@@ -1,5 +1,5 @@
-import React from "react";
-import { Route, Routes } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import AuthLayout from "./components/auth/Layout";
 import AuthLogin from "./pages/auth/Login";
 import AuthRegister from "./pages/auth/Register";
@@ -16,13 +16,13 @@ import NotFound from "./pages/NotFound";
 import ShoppingHome from "./pages/shopping-view/Home";
 import NotAuthoried from "./pages/NotAuthoried";
 import ProtectRoute from "./components/common/ProtectRoute";
+import { Toaster } from "./components/ui/toaster";
+import { useSelector } from "react-redux";
 
 const App = () => {
-  const user = {
-    role: "user",
-    isAuthenticated: false,
-  };
-  const isAuthenticated = user.isAuthenticated;
+  const {user,isAuthenticated}=useSelector(state=>state.auth)
+  
+ 
   return (
     <div className="">
       <Routes>
@@ -45,6 +45,7 @@ const App = () => {
         <Route path="/noaccess" element={<NotAuthoried />} />
         <Route path="*" element={<NotFound />} />s
       </Routes>
+      <Toaster/>
     </div>
   );
 };
