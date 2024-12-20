@@ -1,30 +1,24 @@
 import React from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
 
-const ProtectRoute = ({isAuthenticted,user,children}) => {
+const ProtectRoute = ({isAuthenticated,user,children}) => {
     const location=useLocation()
-const token=localStorage.getItem("token")
-const role=localStorage.getItem("role")
-if(!token){
-    return <Navigate to="/auth/login" />
-
-}   
    
  
-    if(!token && !(location.pathname.includes("/login") || location.pathname.includes("/register"))){
+    if(!isAuthenticated && !(location.pathname.includes("/login") || location.pathname.includes("/register"))){
         return <Navigate to="/auth/login" />
     }
-    if(token && (location.pathname.includes("/login") || location.pathname.includes("/register"))){
-       if(user && user.role==="admin"){
+    if(isAuthenticated && (location.pathname.includes("/login") || location.pathname.includes("/register"))){
+       if(user.role==="admin"){
            return <Navigate to="/admin/dashboard" />
        }else{
               return <Navigate to="/shopping/home" />
        }
     }
-    if(token && location.pathname.includes("/admin") && role!=="admin"){
+    if(isAuthenticated && location.pathname.includes("/admin") && user.role!=="admin"){
         return <Navigate to="/noaccess" />
     }
-    if(token && location.pathname.includes("/shopping") && role==="admin"){
+    if(isAuthenticated && location.pathname.includes("/shopping") && user.role==="admin"){
         return <Navigate to="/admin/dashboard" />
     }
   return (

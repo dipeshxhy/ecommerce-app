@@ -21,9 +21,7 @@ const AuthLogin = () => {
       try {
         const response = await dispatch(loginUser(formData))
         if (response?.data?.data) {
-  console.log(response.data)
-  localStorage.setItem("token",response.data.token)
-  localStorage.setItem("role",response.data.data.role)
+ 
           toast({
             title: "Success",
             description: "Logged in successfully"

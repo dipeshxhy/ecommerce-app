@@ -6,7 +6,8 @@ export const instance=axios.create({
     headers:{
         'Content-Type':'application/json',
 
-    }
+    },
+    withCredentials:true
 })
 //register
 export const registerUser=async (user)=>{
@@ -17,3 +18,4 @@ export const registerUser=async (user)=>{
         return error.response.data;
     }
 }
+
