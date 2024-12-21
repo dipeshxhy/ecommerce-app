@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import AuthLayout from "./components/auth/Layout";
 import AuthLogin from "./pages/auth/Login";
 import AuthRegister from "./pages/auth/Register";
@@ -23,12 +23,15 @@ import { checkAuth } from "./store/actions/authActions";
 const App = () => {
   const {user,isAuthenticated,loading}=useSelector(state=>state.auth)
   const dispatch=useDispatch()
-  // console.log(user,isAuthenticated)
-  // console.log(user)
+  const navigate=useNavigate()
   useEffect(() => {
+   
+   
+
       dispatch(checkAuth());
 
-  }, [dispatch]);
+
+  }, [dispatch,navigate]);
   if (loading) {
     return (
       <div className="h-screen w-full flex items-center justify-center">
@@ -41,17 +44,17 @@ const App = () => {
   return (
     <div className="">
       <Routes>
-        <Route path="/auth" element={<ProtectRoute isAuthenticated={isAuthenticated} user={user}><AuthLayout /></ProtectRoute>}>
+        <Route path="/auth" element={<ProtectRoute isAuthenticated={isAuthenticated} loading={loading} user={user}><AuthLayout /></ProtectRoute>}>
           <Route path="login" element={<AuthLogin />} />
           <Route path="register" element={<AuthRegister />} />
         </Route>
-        <Route path="/admin" element={<ProtectRoute isAuthenticated={isAuthenticated} user={user}><AdminLayout /></ProtectRoute>}>
+        <Route path="/admin" element={<ProtectRoute loading={loading} isAuthenticated={isAuthenticated} user={user}><AdminLayout /></ProtectRoute>}>
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="orders" element={<AdminOrder />} />
           <Route path="features" element={<AdminFeatures />} />
           <Route path="products" element={<AdminProduct />} />s
         </Route>
-        <Route path="/shopping" element={<ProtectRoute isAuthenticated={isAuthenticated} user={user}><ShoppingLayout /></ProtectRoute>}>
+        <Route path="/shopping" element={<ProtectRoute loading={loading} isAuthenticated={isAuthenticated} user={user}><ShoppingLayout /></ProtectRoute>}>
           <Route path="listing" element={<ShoppingListing />} />
           <Route path="home" element={<ShoppingHome />} />
           <Route path="account" element={<ShoppingAccount />} />

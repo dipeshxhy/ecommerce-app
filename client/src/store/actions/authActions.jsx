@@ -1,5 +1,5 @@
 import { instance } from "@/services"
-import { setLoading, setUser } from "../reducers/authReducer"
+import { logout, setLoading, setUser } from "../reducers/authReducer"
 
 
 export const loginUser=(user)=>async(dispatch)=>{
@@ -27,6 +27,22 @@ export const checkAuth=()=>async (dispatch)=>{
         dispatch(setUser(res.data.user));
     } catch (error) {
     dispatch(setUser(null))
+    }finally{
+        dispatch(setLoading(false))
+    }
+}
+
+export const asyncLogout=()=>async(dispatch)=>{
+    try {
+      const res=  await instance.post("/api/auth/logout",{
+            withCredentials:true
+        })
+        dispatch(logout())
+        return res;
+        
+    } catch (error) {
+        console.log(error)
+        
     }finally{
         dispatch(setLoading(false))
     }
